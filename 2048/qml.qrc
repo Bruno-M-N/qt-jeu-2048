@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+        <file>epsa2.png</file>
+        <file>logo_ecl_carre_q.png</file>
     </qresource>
 </RCC>
