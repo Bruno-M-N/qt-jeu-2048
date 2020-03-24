@@ -1,5 +1,25 @@
 import QtQuick 2.0
 
+/* Cette partie gère l'affichage de la grille permettant de jouer. C'est pour l'instant une grille 4x4 construite à la main.
+A chaque case, il y a un rectangle avec un texte à l'intérieur. Les propriétés de couleur et de valeur du texte sont exportés.
+Elles seront mis à jour en fonction de l'avancemement du jeu. Le texte contiendra la valeur auquelle sera associée une unique couleur:
+2->gris
+4-> beige
+8-> orange clair
+16-> orange foncé
+32-> rose
+64-> rouge
+128-> jaune claire
+256-> jaune
+512-> jaune caca d'oie genre foncé
+1024-> un peu pareil
+2048->un peu pareil
+
+===Historique===
+v0.2: ajout commentaire CLS 24/03/2020
+v0.1: rédaction initiale BMR 23/03/2020
+*/
+
 Item {
     id: grid
     width: 625

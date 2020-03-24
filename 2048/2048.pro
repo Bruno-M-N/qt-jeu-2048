@@ -31,5 +31,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 DISTFILES += \
     Board.qml \
-    Tile.qml \
-    jeu.qml
+    Tile.qml
