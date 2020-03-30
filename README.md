@@ -12,5 +12,10 @@ Une partie se joue uniquement avec les 4 flèches de direction. L’appuie sur l
 
 ___
 
-### Le format md
+### Suivi des tâches
+
+La liste des tâches à faire, la répartition et son suivi sera réaliser via un site internet disponible à l'adresse suivante: https://www.notion.so/388c411fcaa7478db7525b81fed310aa?v=f556f87fd77c417eb4ead3900fc27c17
+
+
+#### Le format md
    Le format «__.md__» (dit «_markdown_») est un format texte permettant d’afficher des textes avec une mise en page minimale (titre, gras, souligné, liste à puces...). Il est très utile pour la prise de notes rapides (CR de réunion ou notes de cours). Les commandes markdown sont consultables en [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#links "Markdown Cheatsheet")
