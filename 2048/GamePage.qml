@@ -15,6 +15,7 @@ import QtQuick.Controls 2.12
 
 Page {
     id: gamePage
+    width: 640
     height: 960
 
     header: ToolBar {
@@ -23,6 +24,39 @@ Page {
             font.pixelSize: 20
             anchors.centerIn: parent
         }
+    }
+    
+    Rectangle {
+        id: backgroundRectangle
+        color: "#faf8ef"
+        anchors.fill: parent
+    }
+    
+    Text {
+        id: element
+        x: 8
+        y: 20
+        color: "#776e65"
+        text: qsTr("2048")
+        font.bold: true
+        font.family: "Arial"
+        font.pixelSize: 73
+    }
+
+    TextBox {
+        id: scoreBox
+        x: 253
+        y: 29
+        scoreText: "0"
+        descriptionText: "SCORE"
+    }
+
+    TextBox {
+        id: bestScoreBox
+        x: 400
+        y: 29
+        scoreText: "0"
+        descriptionText: "BEST"
     }
 
     Board {
@@ -94,4 +128,8 @@ Page {
             }
         }
     }
+
+
+
+    
 }

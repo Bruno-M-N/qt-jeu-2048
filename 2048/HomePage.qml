@@ -15,6 +15,7 @@ import QtQuick.Controls 2.12
 
 Page {
     id: homePage
+    width: 640
     height: 960
 
     header: ToolBar {
@@ -24,7 +25,13 @@ Page {
             anchors.centerIn: parent
         }
     }
-
+    
+    Rectangle {
+        id: backgroundRectangle
+        color: "#faf8ef"
+        anchors.fill: parent
+    }
+    
     Rectangle {
         id: en_tete
         height: 105
@@ -165,6 +172,7 @@ Page {
                 }
             }
         }
-
+        
     }
+    
 }

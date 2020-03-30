@@ -25,7 +25,13 @@ Page {
             anchors.centerIn: parent
         }
     }
-
+    
+    Rectangle {
+        id: backgroundRectangle
+        color: "#faf8ef"
+        anchors.fill: parent
+    }
+    
     Board {
         id: board
         x: 8
@@ -79,7 +85,7 @@ Page {
             tileTextText: "32"
             tileTextColor: "#f9f6f2"
         }
-
+        
         Tile {
             id: tile9
             x: 19
@@ -87,6 +93,69 @@ Page {
             tileColor: "#f65e3b"
             tileTextText: "64"
             tileTextColor: "#f9f6f2"
+        }
+        
+        Tile {
+            id: tile10
+            x: 170
+            y: 321
+            tileTextColor: "#f9f6f2"
+            tileColor: "#edcf72"
+            tileTextText: "128"
+        }
+        
+        Tile {
+            id: tile11
+            x: 322
+            y: 321
+            tileTextColor: "#f9f6f2"
+            tileTextText: "256"
+            tileColor: "#edcc61"
+        }
+        
+        Tile {
+            id: tile12
+            x: 473
+            y: 321
+            tileTextColor: "#f9f6f2"
+            tileColor: "#edc850"
+            tileTextText: "512"
+        }
+        
+        Tile {
+            id: tile13
+            x: 473
+            y: 473
+            tileTextColor: "#f9f6f2"
+            tileTextText: "1024"
+            tileColor: "#edc53f"
+        }
+        
+        Tile {
+            id: tile14
+            x: 322
+            y: 473
+            tileTextColor: "#f9f6f2"
+            tileColor: "#edc22e"
+            tileTextText: "2048"
+        }
+        
+        Tile {
+            id: tile15
+            x: 170
+            y: 473
+            tileTextColor: "#f9f6f2"
+            tileTextText: "4096"
+            tileColor: "#3c3a32"
+        }
+        
+        Tile {
+            id: tile16
+            x: 19
+            y: 473
+            tileTextColor: "#f9f6f2"
+            tileColor: "#3c3a32"
+            tileTextText: "8192"
         }
     }
 
@@ -153,4 +222,5 @@ Page {
             }
         }
     }
+    
 }
