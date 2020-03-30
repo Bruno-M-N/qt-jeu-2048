@@ -21,6 +21,12 @@ public:
     int random_number_between(int min, int max_excluded);
     void Set(int x, int y, int value); //Excepetion à écrire
     int Read(int x, int y);
+    int insert_new_tile();
+    bool partie_fini();
+    void deplacer_droite();
+    void deplacer_haut();
+    void deplacer_bas();
+    void deplacer_gauche();
 
 private:
     int** T;

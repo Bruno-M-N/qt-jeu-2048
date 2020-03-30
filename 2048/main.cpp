@@ -3,6 +3,7 @@
 
 #include <QtQml>
 #include "pagemanagement.h"
+#include "grille_jeu.h"
 
 int main(int argc, char *argv[])
 {
@@ -26,6 +27,7 @@ int main(int argc, char *argv[])
 
 
     engine.load(url);
+
 
     return app.exec();
 }
