@@ -5,5 +5,8 @@
         <file>logo_ecl_carre_q.png</file>
         <file>Tile.qml</file>
         <file>Board.qml</file>
+        <file>GamePage.qml</file>
+        <file>HomePage.qml</file>
+        <file>OptionsPage.qml</file>
     </qresource>
 </RCC>
