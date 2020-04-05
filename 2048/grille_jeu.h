@@ -23,10 +23,10 @@ public:
     int Read(int x, int y);
     int insert_new_tile();
     bool partie_fini();
-    void deplacer_droite();
-    void deplacer_haut();
-    void deplacer_bas();
-    void deplacer_gauche();
+    int deplacer_droite();
+    int deplacer_haut();
+    int deplacer_bas();
+    int deplacer_gauche();
 
 private:
     int** T;
