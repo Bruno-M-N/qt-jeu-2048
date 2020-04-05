@@ -13,11 +13,14 @@ public:
     Q_INVOKABLE void showGamePage(const QString &text);
 
 signals:
-    //    Ce signal doit être généré dès lors que le compteur change : il faut en
-    //    informer l’interface graphique pour qu’elle lise la nouvelle valeur du
-    //    compteur et l’affiche dans l’élément graphique « Text » que nous avons
-    //    créé précédemment.
-        void pageChanged(const QString &text);
+    //Ce signal doit être généré dès lors que le compteur change : il faut en
+    //informer l’interface graphique pour qu’elle lise la nouvelle valeur du
+    //compteur et l’affiche dans l’élément graphique « Text » que nous avons
+    //créé précédemment.
+    void pageChanged(const QString &text);
+
+private:
+    bool gameRunning;
 };
 
 #endif // PAGEMANAGEMENT_H

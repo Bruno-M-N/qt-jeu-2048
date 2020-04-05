@@ -3,6 +3,7 @@
 
 #include <QtQml>
 #include "pagemanagement.h"
+#include "game.h"
 #include "grille_jeu.h"
 
 int main(int argc, char *argv[])
@@ -25,6 +26,10 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("cppPageManagement",
                                              &pageManagement);
 
+    printf("A Game shall begging. And it's going to be AWESOME\n");
+    //Create a new game
+    Game game;
+    engine.rootContext()->setContextProperty("cppGame", &game);
 
     engine.load(url);
 

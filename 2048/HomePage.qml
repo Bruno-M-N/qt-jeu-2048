@@ -124,7 +124,7 @@ Page {
                 {
                     //On affiche la fenêtre jeu
                     stackView.push("GamePage.qml");
-                    cppPageManagement.pageChanged("Hello: Game Page");
+                    cppPageManagement.showGamePage("Hello: Game Page");
                 }
             }
         }

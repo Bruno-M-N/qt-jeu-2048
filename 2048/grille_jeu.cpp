@@ -263,7 +263,7 @@ int Grille_jeu::deplacer_bas()
             {
                 T[k][j]=T[k][j]*2;
                 T[k-1][j]=0;
-                somme+=T[i][k];
+                somme+=T[k][j];
             }
         }
     }    
@@ -314,7 +314,7 @@ int Grille_jeu::deplacer_haut()
             {
                 T[k][j]=T[k][j]*2;
                 T[k+1][j]=0;
-                somme+=T[i][k];
+                somme+=T[k][j];
             }
         }
     }

@@ -25,13 +25,19 @@ Page {
             anchors.centerIn: parent
         }
     }
-    
+
+
+
+
+
     Rectangle {
         id: backgroundRectangle
+        x: 0
+        y: 0
         color: "#faf8ef"
         anchors.fill: parent
     }
-    
+
     Text {
         id: element
         x: 8
@@ -124,12 +130,51 @@ Page {
                     //On affiche la fenêtre option
                     stackView.push("HomePage.qml");
                     cppPageManagement.pageChanged("Hello: Home Page");
+                    console.log('Cancel button was pressed');
                 }
             }
         }
     }
 
+    Text{
+        id: label;
+        y: 760
+        text: 'Click on the board to begin'
+        font.pointSize: 12
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 140
+        anchors.left: parent.left
+        anchors.leftMargin: 20
+        verticalAlignment: Text.AlignTop
+    }
 
+    Keys.onPressed: {
+        if (event.key === Qt.Key_A)
+        {   label.text = 'Key A was pressed'
+            cppgame.pageChanged("Hello: Home Page");
+        }else if (event.key === Qt.Key_B)
+        {    label.text = 'Key B was pressed'
+        }else if (event.key === Qt.Key_Left)
+        {    label.text = 'Key_Left'
+        }else if (event.key === Qt.Key_Right)
+        {    label.text = 'Key_Right'
+        }else if (event.key === Qt.Key_Up)
+        {    label.text = 'Key_Up'
+        }else if (event.key === Qt.Key_Down)
+        {    label.text = 'Key_Down'
+        }
+    }
+    //https://stackoverflow.com/questions/48495571/how-to-pass-the-key-focus-to
+    // -the-other-item-in-qml
+    MouseArea
+    {   x: 8; y: 124; width: 625; height: 625;
+        onClicked: parent.forceActiveFocus()
+    }
 
-    
 }
+
+/*##^##
+Designer {
+    D{i:14;anchors_x:244}
+}
+##^##*/
