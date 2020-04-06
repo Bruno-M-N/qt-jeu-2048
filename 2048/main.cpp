@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
 
     printf("A Game shall begging. And it's going to be AWESOME\n");
     //Create a new game
-    Game game;
+    Game game(engine);
     engine.rootContext()->setContextProperty("cppGame", &game);
 
     engine.load(url);

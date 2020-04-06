@@ -149,19 +149,20 @@ Page {
     }
 
     Keys.onPressed: {
-        if (event.key === Qt.Key_A)
-        {   label.text = 'Key A was pressed'
-            cppgame.pageChanged("Hello: Home Page");
-        }else if (event.key === Qt.Key_B)
-        {    label.text = 'Key B was pressed'
+        if (event.key === Qt.Key_S)
+        {   label.text = 'Key S was pressed'
         }else if (event.key === Qt.Key_Left)
-        {    label.text = 'Key_Left'
+        {   label.text = 'Key_Left'
+            cppgame.moveLeft();
         }else if (event.key === Qt.Key_Right)
-        {    label.text = 'Key_Right'
+        {   label.text = 'Key_Right'
+            cppgame.moveRight();
         }else if (event.key === Qt.Key_Up)
-        {    label.text = 'Key_Up'
+        {   label.text = 'Key_Up'
+            cppgame.moveUp();
         }else if (event.key === Qt.Key_Down)
-        {    label.text = 'Key_Down'
+        {   label.text = 'Key_Down'
+            cppgame.moveDown();
         }
     }
     //https://stackoverflow.com/questions/48495571/how-to-pass-the-key-focus-to
