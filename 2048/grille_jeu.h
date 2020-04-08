@@ -14,14 +14,14 @@ class Grille_jeu
 {
 
 public:
-    Grille_jeu();
+    Grille_jeu(int l=4, int c=4);
     ~Grille_jeu();
     void Print();
     void Init();
     int random_number_between(int min, int max_excluded);
     void Set(int x, int y, int value); //Excepetion à écrire
     int Read(int x, int y);
-    int insert_new_tile();
+    int insert_new_tile(int &x, int &y);
     bool partie_fini();
     int deplacer_droite();
     int deplacer_haut();
