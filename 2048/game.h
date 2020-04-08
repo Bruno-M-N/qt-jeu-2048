@@ -12,17 +12,32 @@
 
 #include <QQuickItem>
 
+//test
+#include <QQmlProperty>
+//#include <QQuickWindow>
+
 #include <vector>
 
 #include "grille_jeu.h"
 
+const int BOARD_TILE_SPACED_SIZE = 151;
+const int BOARD_MARGIN = 19;
 
 class Game : public QObject
 {
     Q_OBJECT
 public:
-    explicit Game(QQmlApplicationEngine &engine, QObject *parent = nullptr);
+    explicit Game(QQmlApplicationEngine *engineSetup, QQuickItem *rootSetup,
+                  int rows = 4, int columns = 4,
+                  QObject *parent = nullptr);
     //~Game();
+
+    void createTile();
+    void createTile(int x, int y, int value);
+    void updateTiles();
+
+    //void setBoardCornerPosition(QQmlApplicationEngine &engine);
+    void setBoardCornerPosition();
 
     Q_INVOKABLE void moveRight();
     Q_INVOKABLE void moveUp();
@@ -34,11 +49,18 @@ public:
 signals:
 
 private:
+    QQmlApplicationEngine *engine;
+    QQuickItem *root;
+
+    int nRows; // number of rows
+    int nColumns; //number of columns
     Grille_jeu currentGameRound;
     std::vector <Grille_jeu> previousGameRound;
-    std::vector <QObject> tiles;
-    int score;
-    std::vector <int> scoreRound;
+    int xBoardGamePage; //coordinate x of the Board in GamePage.qml
+    int yBoardGamePage; //coordinate y of the Board in GamePage.qml
+    std::vector <QQuickItem*> tiles;
+    unsigned int score;
+    std::vector <unsigned int> scoreRound;
 ;
 
 

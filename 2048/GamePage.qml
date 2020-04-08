@@ -17,9 +17,13 @@ Page {
     id: gamePage
     width: 640
     height: 960
+    property int boardX: board.x
+    property int boardY: board.y
+    property int headerSize: toolBarLabel.font.pixelSize
 
     header: ToolBar {
         Label {
+            id: toolBarLabel
             text: qsTr("2048 Game Page")
             font.pixelSize: 20
             anchors.centerIn: parent
@@ -87,7 +91,7 @@ Page {
                 {
                     //On affiche la fenêtre option
                     stackView.push("HomePage.qml");
-                    cppPageManagement.pageChanged("Hello: Home Page");
+                    cppPageManagement.showHomePage("Hello: Home Page");
                 }
             }
         }
@@ -108,7 +112,7 @@ Page {
                 {
                     //On affiche la fenêtre option
                     stackView.push("HomePage.qml");
-                    cppPageManagement.pageChanged("Hello: Home Page");
+                    cppPageManagement.showHomePage("Hello: Home Page");
                 }
             }
         }
@@ -129,7 +133,7 @@ Page {
                 {
                     //On affiche la fenêtre option
                     stackView.push("HomePage.qml");
-                    cppPageManagement.pageChanged("Hello: Home Page");
+                    cppPageManagement.showHomePage("Hello: Home Page");
                     console.log('Cancel button was pressed');
                 }
             }
@@ -153,23 +157,30 @@ Page {
         {   label.text = 'Key S was pressed'
         }else if (event.key === Qt.Key_Left)
         {   label.text = 'Key_Left'
-            cppgame.moveLeft();
+            cppGame.moveLeft();
         }else if (event.key === Qt.Key_Right)
         {   label.text = 'Key_Right'
-            cppgame.moveRight();
+            cppGame.moveRight();
         }else if (event.key === Qt.Key_Up)
         {   label.text = 'Key_Up'
-            cppgame.moveUp();
+            console.log('Key_Up button was pressed');
+            cppGame.moveUp();
+            //cppGame.displayTiles();
+            console.log('cppGame Up executed with success');
         }else if (event.key === Qt.Key_Down)
         {   label.text = 'Key_Down'
-            cppgame.moveDown();
+            cppGame.moveDown();
         }
     }
     //https://stackoverflow.com/questions/48495571/how-to-pass-the-key-focus-to
     // -the-other-item-in-qml
     MouseArea
-    {   x: 8; y: 124; width: 625; height: 625;
-        onClicked: parent.forceActiveFocus()
+    {   x: board.x; y: board.y; width: 625; height: 625;
+        onClicked:
+        {   parent.forceActiveFocus()
+            label.text = ' '
+            cppPageManagement.startGame();
+        }
     }
 
 }
