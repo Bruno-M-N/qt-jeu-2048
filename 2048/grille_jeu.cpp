@@ -1,9 +1,9 @@
 #include "grille_jeu.h"
 using namespace std;
 
-Grille_jeu::Grille_jeu()
+Grille_jeu::Grille_jeu(int l, int c)
 {
-    Alloc(4,4); //la taille sera à adapter en fonction des modes
+    Alloc(l,c); //la taille sera à adapter en fonction des modes
     Init();
 }
 
@@ -34,7 +34,6 @@ void Grille_jeu::Init()
             T[i][j]=0;
         }
     }
-    insert_new_tile();
 }
 
 void Grille_jeu::Set(int x, int y, int value)
@@ -73,6 +72,7 @@ void Grille_jeu::Print()
         for(int j=0; j<C; j++)
             cout << T[i][j] << ", ";
     }
+    cout << endl;
 }
 
 int Grille_jeu::random_number_between(int min, int max_excluded)
@@ -96,13 +96,13 @@ bool Grille_jeu::partie_fini()
     return partie_fini;
 }
 
-int Grille_jeu::insert_new_tile()
+int Grille_jeu::insert_new_tile(int &x, int &y)
 {
     //Cette fonction permet de créer la nouvelle tile placé aléatoirement à
     // chaque tour tout en vérifiant si la partie est fini ou pas
 
     bool continuer=true;
-    int a,x,y;
+    int a,i,j;
     if(partie_fini())//on teste d'abord si la partie est finie ou pas
     {
         return -1;
@@ -112,22 +112,24 @@ int Grille_jeu::insert_new_tile()
         while(continuer)
         {
            a=random_number_between(0,100);
-           x=random_number_between(0,L);
-           y=random_number_between(0,C);
-           if(T[x][y]==0)
+           i=random_number_between(0,L);
+           j=random_number_between(0,C);
+           if(T[i][j]==0)
            {
                if(a>=75)
                {
-                   T[x][y]=4;
+                   T[i][j]=4;
                }
                else
                {
-                   T[x][y]=2;
+                   T[i][j]=2;
                }
                continuer=false;
+               x = i;
+               y = j;
            }
         }
-        return 0;
+        return T[i][j];
     }
 }
 
