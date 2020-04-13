@@ -5,6 +5,7 @@ Grille_jeu::Grille_jeu(int l, int c)
 {
     Alloc(l,c); //la taille sera à adapter en fonction des modes
     Init();
+    score=0;
 }
 
 Grille_jeu::~Grille_jeu()
@@ -56,9 +57,23 @@ int Grille_jeu::Read(int x, int y)
     }
 }
 
+int Grille_jeu::Read_score()
+{
+    return score;
+}
+
+void Grille_jeu::Set_score(int value)
+{
+    if(value>=0)
+    {
+        score=value;
+    }
+}
+
 void Grille_jeu::Free()
 {
-    for (int i=0; i<L; i++) {
+    for (int i=0; i<L; i++)
+    {
         delete [] T[i];
     }
     delete [] T;
@@ -94,6 +109,21 @@ bool Grille_jeu::partie_fini()
         }
     }
     return partie_fini;
+}
+
+bool Grille_jeu::title_2048_fait()
+{
+    for(int i=0;i<L;i++)
+    {
+        for(int j=0;j<C;j++)
+        {
+            if(T[i][j]==2048)
+            {
+                return true;;
+            }
+        }
+    }
+    return false;
 }
 
 int Grille_jeu::insert_new_tile(int &x, int &y)
@@ -133,7 +163,7 @@ int Grille_jeu::insert_new_tile(int &x, int &y)
     }
 }
 
-int Grille_jeu::deplacer_droite()
+void Grille_jeu::deplacer_droite()
 {   //deplacement 1: Le principe est basé sur celui du tri à bulle. On emmène
     //les 0 à l'opposé du déplacement sans changer l'ordre
     for(int i=0;i<L;i++)
@@ -154,7 +184,6 @@ int Grille_jeu::deplacer_droite()
     }
     //Partie Somme: Les nombres étant tous les uns à côté des autres il reste
     //plus qu'à sommer ceux identiques et à mettre un 0 dans l'une des cases
-    int somme=0;
     for(int i=0;i<L;i++)
     {
         for(int k=C-1;k>0;k--)
@@ -163,7 +192,7 @@ int Grille_jeu::deplacer_droite()
             {
                 T[i][k]=T[i][k]*2;
                 T[i][k-1]=0;
-                somme+=T[i][k];
+                score+=T[i][k];
             }
         }
     }
@@ -183,10 +212,9 @@ int Grille_jeu::deplacer_droite()
             }
         }
     }
-    return somme;
 }
 
-int Grille_jeu::deplacer_gauche()
+void Grille_jeu::deplacer_gauche()
 {   //deplacement 1: Le principe est basé sur celui du tri à bulle. On emmène
     //les 0 à l'opposé du déplacement sans changer l'ordre
     for(int i=0;i<L;i++)
@@ -205,7 +233,6 @@ int Grille_jeu::deplacer_gauche()
     }  
     //Partie Somme: Les nombres étant tous les uns à côté des autres il reste
     //plus qu'à sommer ceux identiques et à mettre un 0 dans l'une des cases
-    int somme=0;
     for(int i=0;i<L;i++)
     {
         for(int k=0;k<C-1;k++)
@@ -214,7 +241,7 @@ int Grille_jeu::deplacer_gauche()
             {
                 T[i][k]=T[i][k]*2;
                 T[i][k+1]=0;
-                somme+=T[i][k];
+                score+=T[i][k];
             }
         }
     }
@@ -234,10 +261,9 @@ int Grille_jeu::deplacer_gauche()
             }
         }
     }
-    return somme;
 }
 
-int Grille_jeu::deplacer_bas()
+void Grille_jeu::deplacer_bas()
 {   //deplacement 1: Le principe est basé sur celui du tri à bulle. On emmène
     //les 0 à l'opposé du déplacement sans changer l'ordre
     for(int j=0;j<C;j++)
@@ -256,7 +282,6 @@ int Grille_jeu::deplacer_bas()
     }
     //Partie Somme: Les nombres étant tous les uns à côté des autres il reste
     //plus qu'à sommer ceux identiques et à mettre un 0 dans l'une des cases
-    int somme=0;
     for(int j=0;j<C;j++)
     {
         for(int k=L-1;k>0;k--)
@@ -265,7 +290,7 @@ int Grille_jeu::deplacer_bas()
             {
                 T[k][j]=T[k][j]*2;
                 T[k-1][j]=0;
-                somme+=T[k][j];
+                score+=T[k][j];
             }
         }
     }    
@@ -285,10 +310,9 @@ int Grille_jeu::deplacer_bas()
             }
         }
     }
-    return somme;
 }
 
-int Grille_jeu::deplacer_haut()
+void Grille_jeu::deplacer_haut()
 {   //deplacement 1: Le principe est basé sur celui du tri à bulle. On emmène
     //les 0 à l'opposé du déplacement sans changer l'ordre
     for(int j=0;j<C;j++)
@@ -307,7 +331,6 @@ int Grille_jeu::deplacer_haut()
     }
     //Partie Somme: Les nombres étant tous les uns à côté des autres il reste
     //plus qu'à sommer ceux identiques et à mettre un 0 dans l'une des cases
-    int somme=0;
     for(int j=0;j<C;j++)
     {
         for(int k=0;k<L-1;k++)
@@ -316,7 +339,7 @@ int Grille_jeu::deplacer_haut()
             {
                 T[k][j]=T[k][j]*2;
                 T[k+1][j]=0;
-                somme+=T[k][j];
+                score+=T[k][j];
             }
         }
     }
@@ -336,5 +359,4 @@ int Grille_jeu::deplacer_haut()
             }
         }
     }
-    return somme;
 }

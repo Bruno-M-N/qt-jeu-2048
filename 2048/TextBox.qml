@@ -23,6 +23,7 @@ Item {
             height: 32
             color: "#c5cbd1"
             text: qsTr("DESCRIPTION")
+            fontSizeMode: Text.HorizontalFit
             anchors.right: parent.right
             anchors.rightMargin: 0
             anchors.left: parent.left
@@ -42,6 +43,7 @@ Item {
             height: 35
             color: "#ffffff"
             text: qsTr("80856")
+            fontSizeMode: Text.HorizontalFit
             anchors.right: parent.right
             anchors.rightMargin: 0
             anchors.left: parent.left

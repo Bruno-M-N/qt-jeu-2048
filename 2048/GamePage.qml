@@ -54,11 +54,11 @@ Page {
     }
 
     TextBox {
-        id: scoreBox
-        x: 253
+        id: score_box
+        x: 250
         y: 29
-        scoreText: "0"
         descriptionText: "SCORE"
+        scoreText: "0"
     }
 
     TextBox {
@@ -131,9 +131,7 @@ Page {
                 if (mouse.button == Qt.RightButton |
                         mouse.button == Qt.LeftButton )
                 {
-                    //On affiche la fenêtre option
-                    stackView.push("HomePage.qml");
-                    cppPageManagement.showHomePage("Hello: Home Page");
+                    cppGame.annuler();
                     console.log('Cancel button was pressed');
                 }
             }
@@ -182,6 +180,7 @@ Page {
             cppPageManagement.startGame();
         }
     }
+
 
 }
 

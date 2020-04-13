@@ -23,16 +23,19 @@ public:
     int Read(int x, int y);
     int insert_new_tile(int &x, int &y);
     bool partie_fini();
-    int deplacer_droite();
-    int deplacer_haut();
-    int deplacer_bas();
-    int deplacer_gauche();
+    bool title_2048_fait();
+    void deplacer_droite();
+    void deplacer_haut();
+    void deplacer_bas();
+    void deplacer_gauche();
+    int Read_score();
+    void Set_score(int value);
 
 private:
     int** T;
     int L;
     int C;
-
+    int score;
     //méthode
     void Alloc(int l, int c);
     void Free();

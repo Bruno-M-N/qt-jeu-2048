@@ -35,6 +35,7 @@ public:
     void createTile();
     void createTile(int x, int y, int value);
     void updateTiles();
+    void displayScores();
 
     //void setBoardCornerPosition(QQmlApplicationEngine &engine);
     void setBoardCornerPosition();
@@ -43,24 +44,27 @@ public:
     Q_INVOKABLE void moveUp();
     Q_INVOKABLE void moveDown();
     Q_INVOKABLE void moveLeft();
-
+    Q_INVOKABLE void annuler();
     Q_INVOKABLE void displayTiles();
+
 
 signals:
 
 private:
     QQmlApplicationEngine *engine;
     QQuickItem *root;
+    void Alloc(int l, int c);
+    void Copy();
+    bool Grille_differente_de_grille_precedente();
 
     int nRows; // number of rows
     int nColumns; //number of columns
     Grille_jeu currentGameRound;
-    std::vector <Grille_jeu> previousGameRound;
+    int** previousGameRound;
     int xBoardGamePage; //coordinate x of the Board in GamePage.qml
     int yBoardGamePage; //coordinate y of the Board in GamePage.qml
     std::vector <QQuickItem*> tiles;
-    unsigned int score;
-    std::vector <unsigned int> scoreRound;
+    int score_precedent;
 ;
 
 

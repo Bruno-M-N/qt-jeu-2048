@@ -12,6 +12,9 @@ Game::Game(QQmlApplicationEngine *engineSetup, QQuickItem *rootSetup,
     //Create grille_jeu
     Grille_jeu currentGameRound(nRows, nColumns);
 
+    //Création du tableau stockant la grille au coup précédent
+    Alloc(nRows,nColumns);
+    Copy();
 
     xBoardGamePage = 0;
     yBoardGamePage = 0;
@@ -21,6 +24,39 @@ Game::Game(QQmlApplicationEngine *engineSetup, QQuickItem *rootSetup,
 //    qDebug() << "Board Property value y:" << yBoardGamePage;
 }
 
+void Game::Alloc(int l, int c)
+{
+    previousGameRound = new int*[l];
+    for(int i=0; i<l; i++)
+        previousGameRound[i] = new int[c];
+}
+
+void Game::Copy() //Met à jour le tableau sotckant le coup précédent
+{
+    for(int i=0;i<nRows;i++)
+    {
+        for(int j=0;j<nRows;j++)
+        {
+            previousGameRound[i][j]=currentGameRound.Read(i,j);
+            score_precedent=currentGameRound.Read_score();
+        }
+    }
+}
+
+bool Game::Grille_differente_de_grille_precedente()
+{
+    for(int i=0;i<nRows;i++)
+    {
+        for(int j=0;j<nRows;j++)
+        {
+            if(currentGameRound.Read(i,j)!=previousGameRound[i][j])
+            {
+                return true;
+            }
+        }
+    }
+    return false;
+}
 //Game::~Game()
 //{
 //}
@@ -128,7 +164,7 @@ void Game::createTile(int x, int y, int value)
     }else if (value == 2048)
     {   tileObject->setProperty("tileTextColor", "#f9f6f2");
         tileObject->setProperty("tileColor", "#edc22e");
-        tileObject->setProperty("tileTextText", "1024");
+        tileObject->setProperty("tileTextText", "2048");
     }else if (value == 4096)
     {   tileObject->setProperty("tileTextColor", "#f9f6f2");
         tileObject->setProperty("tileColor", "#3c3a32");
@@ -138,9 +174,6 @@ void Game::createTile(int x, int y, int value)
         tileObject->setProperty("tileColor", "#3c3a32");
         tileObject->setProperty("tileTextText", value);
     }
-
-
-
 
     tileObject->setProperty("x", xBoardGamePage + BOARD_TILE_SPACED_SIZE * y
                             + BOARD_MARGIN);
@@ -184,31 +217,66 @@ void Game::setBoardCornerPosition()
 
 
 void Game::moveRight()
-{   score += currentGameRound.deplacer_droite();
-    this->createTile();
-    this->displayTiles();
-    scoreRound.push_back(score);
+{
+    Copy(); //On sauvegarde l'état de la grille avant de tenter le déplacement
+    currentGameRound.deplacer_droite();
+    if(Grille_differente_de_grille_precedente())
+    {
+        this->createTile();
+        this->displayTiles();
+        this->displayScores();
+    }
 }
 
 void Game::moveUp()
-{   score += currentGameRound.deplacer_haut();
-    this->createTile();
-    this->displayTiles();
-    scoreRound.push_back(score);
+{
+    Copy(); //On sauvegarde l'état de la grille avant de tenter le déplacement
+    currentGameRound.deplacer_haut();
+    if(Grille_differente_de_grille_precedente())
+    {
+        this->createTile();
+        this->displayTiles();
+        this->displayScores();
+    }
 }
 
 void Game::moveDown()
-{   score += currentGameRound.deplacer_bas();
-    this->createTile();
-    this->displayTiles();
-    scoreRound.push_back(score);
+{
+    Copy(); //On sauvegarde l'état de la grille avant de tenter le déplacement
+    currentGameRound.deplacer_bas();
+    if(Grille_differente_de_grille_precedente())
+    {
+        this->createTile();
+        this->displayTiles();
+        this->displayScores();
+    }
 }
 
 void Game::moveLeft()
-{   score += currentGameRound.deplacer_gauche();
-    this->createTile();
+{
+    Copy(); //On sauvegarde l'état de la grille avant de tenter le déplacement
+    currentGameRound.deplacer_gauche();
+    if(Grille_differente_de_grille_precedente()) //On va modifier l'affichage qui s'il y a eu réellement un déplacement
+    {
+        this->createTile();
+        this->displayTiles();
+        this->displayScores();
+    }
+}
+
+void Game::annuler()
+{
+    for(int i=0;i<nRows;i++)
+    {
+        for (int j=0;j<nColumns;j++)
+        {
+            int a = previousGameRound[i][j];
+            currentGameRound.Set(i,j,a);
+        }
+    }
+    currentGameRound.Set_score(score_precedent);
     this->displayTiles();
-    scoreRound.push_back(score);
+    this->displayScores();
 }
 
 void Game::displayTiles()
@@ -220,7 +288,8 @@ void Game::displayTiles()
     //Maybe delete the vector part of createTile is a solution with we want to
     //make a new interface every time instead of following the tiles evolution
     for (unsigned int i = 0; i < tiles.size(); i++)
-    {   delete tiles[i];
+    {
+        delete tiles[i];
     }
 
     tiles.clear();
@@ -230,7 +299,8 @@ void Game::displayTiles()
     {   for (int j = 0; j < nColumns; j++)
         {   int value = currentGameRound.Read(i,j);
             if (value != 0)
-            {   this->createTile(i, j, value);
+            {
+                this->createTile(i, j, value);
             }
         }
     }
@@ -239,4 +309,24 @@ void Game::displayTiles()
 //    {   //tiles[i]
 
 //    }
+}
+
+void Game::displayScores()
+{
+    const QUrl url(QStringLiteral("qrc:/TextBox.qml"));
+    QQmlComponent component(engine, url);
+    QQuickItem *scoreObject = qobject_cast<QQuickItem*>(component.create());
+
+    //To avoid the Javascript garbage collector to kill it, tell QML that C++
+    //takes care of it:
+    QQmlEngine::setObjectOwnership(scoreObject, QQmlEngine::CppOwnership);
+
+    //Set the visual parent of the item.
+    scoreObject->setParentItem(root);
+    //Makes the object a child of parent.
+    scoreObject->setParent(engine);
+    scoreObject->setProperty("descriptionText","SCORE");
+    scoreObject->setProperty("scoreText",currentGameRound.Read_score());
+    scoreObject->setX(250);
+    scoreObject->setY(69);
 }
