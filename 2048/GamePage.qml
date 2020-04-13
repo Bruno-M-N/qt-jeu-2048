@@ -89,7 +89,9 @@ Page {
                 if (mouse.button == Qt.RightButton |
                         mouse.button == Qt.LeftButton )
                 {
-                    //On affiche la fenêtre option
+                    //on nettoie l'affichage
+                    //On affiche la fenêtre HomePage
+                    cppPageManagement.stopGame();
                     stackView.push("HomePage.qml");
                     cppPageManagement.showHomePage("Hello: Home Page");
                 }

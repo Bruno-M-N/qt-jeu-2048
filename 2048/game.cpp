@@ -1,7 +1,7 @@
 #include "game.h"
 
 Game::Game(QQmlApplicationEngine *engineSetup, QQuickItem *rootSetup,
-           int rows, int columns,
+           int rows, int columns,int bestScore,
            QObject *parent) : QObject(parent)
 {   nRows = rows;
     nColumns = columns;
@@ -15,7 +15,7 @@ Game::Game(QQmlApplicationEngine *engineSetup, QQuickItem *rootSetup,
     //Création du tableau stockant la grille au coup précédent
     Alloc(nRows,nColumns);
     Copy();
-
+    best_score.push_back(bestScore);
     xBoardGamePage = 0;
     yBoardGamePage = 0;
     //this->setBoardCornerPosition(engineSetup);
@@ -222,6 +222,7 @@ void Game::moveRight()
     currentGameRound.deplacer_droite();
     if(Grille_differente_de_grille_precedente())
     {
+        best_score.push_back(currentGameRound.Read_score());
         this->createTile();
         this->displayTiles();
         this->displayScores();
@@ -234,6 +235,7 @@ void Game::moveUp()
     currentGameRound.deplacer_haut();
     if(Grille_differente_de_grille_precedente())
     {
+        best_score.push_back(currentGameRound.Read_score());
         this->createTile();
         this->displayTiles();
         this->displayScores();
@@ -246,6 +248,7 @@ void Game::moveDown()
     currentGameRound.deplacer_bas();
     if(Grille_differente_de_grille_precedente())
     {
+        best_score.push_back(currentGameRound.Read_score());
         this->createTile();
         this->displayTiles();
         this->displayScores();
@@ -258,6 +261,7 @@ void Game::moveLeft()
     currentGameRound.deplacer_gauche();
     if(Grille_differente_de_grille_precedente()) //On va modifier l'affichage qui s'il y a eu réellement un déplacement
     {
+        best_score.push_back(currentGameRound.Read_score());
         this->createTile();
         this->displayTiles();
         this->displayScores();
@@ -313,20 +317,78 @@ void Game::displayTiles()
 
 void Game::displayScores()
 {
+    //On enelève les boites de score précédent
+    for (unsigned int i = 0; i < box_score.size(); i++)
+    {
+        delete box_score[i];
+    }
+    box_score.clear();
+
     const QUrl url(QStringLiteral("qrc:/TextBox.qml"));
     QQmlComponent component(engine, url);
     QQuickItem *scoreObject = qobject_cast<QQuickItem*>(component.create());
-
+    QQuickItem *bestScoreObject = qobject_cast<QQuickItem*>(component.create());
     //To avoid the Javascript garbage collector to kill it, tell QML that C++
     //takes care of it:
     QQmlEngine::setObjectOwnership(scoreObject, QQmlEngine::CppOwnership);
-
+    QQmlEngine::setObjectOwnership(bestScoreObject, QQmlEngine::CppOwnership);
     //Set the visual parent of the item.
     scoreObject->setParentItem(root);
+    bestScoreObject->setParentItem(root);
     //Makes the object a child of parent.
     scoreObject->setParent(engine);
+    bestScoreObject->setParent(engine);
+
     scoreObject->setProperty("descriptionText","SCORE");
     scoreObject->setProperty("scoreText",currentGameRound.Read_score());
     scoreObject->setX(250);
     scoreObject->setY(69);
+    box_score.push_back(scoreObject);
+    bestScoreObject->setProperty("descriptionText","BEST");
+    bestScoreObject->setProperty("scoreText",maxi(best_score));
+    bestScoreObject->setX(400);
+    bestScoreObject->setY(69);
+    box_score.push_back(bestScoreObject);
+}
+
+int Game::maxi(std::vector<int> v)
+{
+    int a=v.at(0);
+    for (unsigned long long i=1;i<v.size();i++)
+    {
+        if(v[i]>a)
+        {
+            a=v[i];
+        }
+    }
+    return a;
+}
+
+void Game::clean_display()
+{
+    for (unsigned int i = 0; i < tiles.size(); i++)
+    {
+        delete tiles[i];
+    }
+
+    tiles.clear();
+    for (unsigned int i = 0; i < box_score.size(); i++)
+    {
+        delete box_score[i];
+    }
+    box_score.clear();
+    currentGameRound.Set_score(0);
+    currentGameRound.Init();
+}
+
+void Game::endGame()
+{
+    if(currentGameRound.partie_fini())
+    {
+        //on a perdu
+    }
+    else if(currentGameRound.title_2048_fait())
+    {
+        //Affichage du message gagnant
+    }
 }

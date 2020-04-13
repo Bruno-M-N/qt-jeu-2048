@@ -26,7 +26,7 @@ public:
 
     Q_INVOKABLE void showHomePage(const QString &text);
     Q_INVOKABLE void showGamePage(const QString &text);
-
+    Q_INVOKABLE void stopGame();
     Q_INVOKABLE void startGame();
 
 signals:

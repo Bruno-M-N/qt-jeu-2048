@@ -28,7 +28,7 @@ class Game : public QObject
     Q_OBJECT
 public:
     explicit Game(QQmlApplicationEngine *engineSetup, QQuickItem *rootSetup,
-                  int rows = 4, int columns = 4,
+                  int rows = 4, int columns = 4,int bestScore=0,
                   QObject *parent = nullptr);
     //~Game();
 
@@ -36,7 +36,6 @@ public:
     void createTile(int x, int y, int value);
     void updateTiles();
     void displayScores();
-
     //void setBoardCornerPosition(QQmlApplicationEngine &engine);
     void setBoardCornerPosition();
 
@@ -46,8 +45,8 @@ public:
     Q_INVOKABLE void moveLeft();
     Q_INVOKABLE void annuler();
     Q_INVOKABLE void displayTiles();
-
-
+    Q_INVOKABLE void clean_display();
+    Q_INVOKABLE void endGame();
 signals:
 
 private:
@@ -56,6 +55,7 @@ private:
     void Alloc(int l, int c);
     void Copy();
     bool Grille_differente_de_grille_precedente();
+    int maxi(std::vector<int> v);
 
     int nRows; // number of rows
     int nColumns; //number of columns
@@ -64,6 +64,8 @@ private:
     int xBoardGamePage; //coordinate x of the Board in GamePage.qml
     int yBoardGamePage; //coordinate y of the Board in GamePage.qml
     std::vector <QQuickItem*> tiles;
+    std::vector <QQuickItem*> box_score;
+    std::vector <int> best_score;
     int score_precedent;
 ;
 

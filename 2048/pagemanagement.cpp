@@ -2,12 +2,12 @@
 
 PageManagement::PageManagement(QQmlApplicationEngine *engine, QQuickItem *root,
                                int rows, int columns,
-                               QObject *parent) : QObject(parent),
-                                                  game (engine, root,
-                                                        rows, columns)
-{   pageChanged("Hello: HomePage 1");
-    printf("Hello World: HomePage 1 (constructor)\n");
+                               QObject *parent) : QObject(parent),game (engine, root,
+                                                                            rows, columns)
 
+{
+    pageChanged("Hello: HomePage 1");
+    printf("Hello World: HomePage 1 (constructor)\n");
     //Create a new game
     //Game game (engine);
     engine->rootContext()->setContextProperty("cppGame", &game);
@@ -30,5 +30,11 @@ void PageManagement::startGame()
     {   gameRunning = true;
         game.createTile();
     }
+}
+
+void PageManagement::stopGame()
+{
+    game.clean_display();
+    gameRunning=false;
 }
 
